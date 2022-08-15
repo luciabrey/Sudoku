@@ -1,13 +1,14 @@
 /*- S U D O K U -*/
 #include <stdio.h>
 #include <stdlib.h>
-#include<windows.h>
+#include <windows.h>
+#include <time.h>
 
 
 
 int i, j, k, n, m, aux;
 int sudoku[9][9], correcto = 1, r, r2;
-
+int numero[9], random = 0;
 
 int main(){
 	int aux;
@@ -65,6 +66,7 @@ int main(){
 		//Reseteamos la variable "Sudoku"
 		for(i=0;i<9;i++)
 		{
+			numero[i] = 0;
 			for(j=0;j<9;j++)
 			{
 				sudoku[i][j] = 0;
@@ -113,7 +115,6 @@ int main(){
 		int guia[9] = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
 		int ubiX[9], h;
 		int ubiY[9];
-		int numero[9];
 		
 		//primero hacemos un rand para la ubicacion
 			//0 ubicacion
@@ -159,30 +160,31 @@ int main(){
 			
 			
 	//y ahora un rand para el numero
-		
+	
+	
+			
+	srand (time(NULL));	
 	for(i = 0;i<9;i++)
 	{
-		numero[i] = rand() % 9 + 1;
+		int yaexiste = 0;
+		do
+		{
+			yaexiste = 0;
+			random = rand() % 9 + 1;
+			for(j=0;j<9;j++)
+			{
+				if(random == numero[j])
+					yaexiste = 1;
+			}
+		} while(yaexiste);
+		numero[i] = random;
 	}
+	
 		
 	//Almacenamos los numero en la variable Sudoku
 	for(i=0;i<9;i++)
 	{
-		for(j = 0;j<9;j++)
-		if(
-		ubiX[0] == j && ubiY[0] == i ||
-		ubiX[1] == j && ubiY[1] == i ||
-		ubiX[2] == j && ubiY[2] == i ||
-		ubiX[3] == j && ubiY[3] == i ||
-		ubiX[4] == j && ubiY[4] == i ||
-		ubiX[5] == j && ubiY[5] == i ||
-		ubiX[6] == j && ubiY[6] == i ||
-		ubiX[7] == j && ubiY[7] == i ||
-		ubiX[8] == j && ubiY[8] == i 
-		)
-		{
-			sudoku[i][j] = numero[i];
-		}
+		sudoku[ubiX[i]][ubiY[i]] = numero[i];	
 	}
 		
 		
@@ -232,26 +234,18 @@ int main(){
 				
 
 				//Ahora vamos hacer que solo los numeros por default tengan color
-				if(ubiX[0] == j && ubiY[0] == i ||
-					ubiX[1] == j && ubiY[1] == i ||
-					ubiX[2] == j && ubiY[2] == i ||
-					ubiX[3] == j && ubiY[3] == i ||
-					ubiX[4] == j && ubiY[4] == i ||
-					ubiX[5] == j && ubiY[5] == i ||
-					ubiX[6] == j && ubiY[6] == i ||
-					ubiX[7] == j && ubiY[7] == i ||
-					ubiX[8] == j && ubiY[8] == i 
-				)
-				{
-					SetConsoleTextAttribute(hConsole, 3);
-					printf(" %d ", sudoku[i][j]);
-				}
-				
-				else 
-				{
+//				if(ubiX[i] == j  && ubiY[i] == i)
+//				{
+//					SetConsoleTextAttribute(hConsole, 3);
+//					printf(" %d ", sudoku[i][j]);
+//				}
+//			
+//				else 
+//				{
+					
 					SetConsoleTextAttribute(hConsole, 7);
 					printf(" %d ", sudoku[i][j]);
-				}
+//				}
 	
 				SetConsoleTextAttribute(hConsole, 7);
 
@@ -339,29 +333,29 @@ int main(){
 								}
 								
 								//Ahora vamos hacer que solo los numeros por default tengan color
-								if(ubiX[0] == m && ubiY[0] == n ||
-									ubiX[1] == m && ubiY[1] == n ||
-									ubiX[2] == m && ubiY[2] == n ||
-									ubiX[3] == m && ubiY[3] == n ||
-									ubiX[4] == m && ubiY[4] == n ||
-									ubiX[5] == m && ubiY[5] == n ||
-									ubiX[6] == m && ubiY[6] == n ||
-									ubiX[7] == m && ubiY[7] == n ||
-									ubiX[8] == m && ubiY[8] == n 
-								)
-								{
-									SetConsoleTextAttribute(hConsole, 3);
-									printf(" %d ", sudoku[n][m]);
-								}
-								
-								else 
-								{
+//								if(ubiX[0] == m && ubiY[0] == n ||
+//									ubiX[1] == m && ubiY[1] == n ||
+//									ubiX[2] == m && ubiY[2] == n ||
+//									ubiX[3] == m && ubiY[3] == n ||
+//									ubiX[4] == m && ubiY[4] == n ||
+//									ubiX[5] == m && ubiY[5] == n ||
+//									ubiX[6] == m && ubiY[6] == n ||
+//									ubiX[7] == m && ubiY[7] == n ||
+//									ubiX[8] == m && ubiY[8] == n 
+//								)
+//								{
+//									SetConsoleTextAttribute(hConsole, 3);
+//									printf(" %d ", sudoku[n][m]);
+//								}
+//								
+//								else 
+//								{
 									SetConsoleTextAttribute(hConsole, 7);	
 									printf(" %d ", sudoku[n][m]);
-								}
-								
-								SetConsoleTextAttribute(hConsole, 7);
-				
+//								}
+//								
+//								SetConsoleTextAttribute(hConsole, 7);
+//				
 								if(m == 2 || m == 5)
 								{
 									printf(" | ");
