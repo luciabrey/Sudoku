@@ -9,6 +9,8 @@
 int i, j, k, n, m, aux;
 int sudoku[9][9], correcto = 1, r, r2;
 int numero[9], random = 0;
+int ubiX[9], h;
+int ubiY[9];
 
 int main(){
 	int aux;
@@ -63,10 +65,12 @@ int main(){
 		printf("\n3. Salir");
 		
 		
-		//Reseteamos la variable "Sudoku"
+		//Reseteamos la variable "Sudoku" "numero" y las ubicaciones
 		for(i=0;i<9;i++)
 		{
 			numero[i] = 0;
+			ubiY[i] = 0;
+			ubiX[i] = 0;
 			for(j=0;j<9;j++)
 			{
 				sudoku[i][j] = 0;
@@ -88,7 +92,7 @@ int main(){
 		SetConsoleTextAttribute(hConsole, 4);
 		printf(" - - - \n");
 		SetConsoleTextAttribute(hConsole, 7);
-		printf(" 1. Cada bloque es de 3x3 y contiene un numero aleatorio \n 2. NO  se pueden repetir numeros tanto de forma horizontal como vertical \n 3. Hay que completar las casillas vacías con los números del 1 al 9\n 4. NO HAY VIDAS Tenes una oportunidad unica \n");
+		printf(" 1. Cada bloque es de 3x3 y contiene un numero aleatorio \n 2. NO  se pueden repetir numeros tanto de forma horizontal como vertical \n 3. Hay que completar las casillas vac?as con los n?meros del 1 al 9\n 4. NO HAY VIDAS Tenes una oportunidad unica \n");
 		
 		printf("____________________________________________________________ \n\n Seleccione:  \n 1.Menu \n ");
 		scanf("%d", &aux);
@@ -113,8 +117,7 @@ int main(){
 		system("cls");
 		
 		int guia[9] = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
-		int ubiX[9], h;
-		int ubiY[9];
+		
 		
 		//primero hacemos un rand para la ubicacion
 			//0 ubicacion
@@ -194,6 +197,7 @@ int main(){
 		printf(" | ");
 		for(i=0;i<9;i++)
 		{
+			
 			if(i == 0)
 			{
 				for(h=0;h<9;h++)
@@ -234,18 +238,26 @@ int main(){
 				
 
 				//Ahora vamos hacer que solo los numeros por default tengan color
-//				if(ubiX[i] == j  && ubiY[i] == i)
-//				{
-//					SetConsoleTextAttribute(hConsole, 3);
-//					printf(" %d ", sudoku[i][j]);
-//				}
-//			
-//				else 
-//				{
+				if((ubiX[0] == i && ubiY[0] == j) ||
+					(ubiX[1] == i && ubiY[1] == j)||
+					(ubiX[2] == i && ubiY[2] == j) ||
+					(ubiX[3] == i && ubiY[3] == j) ||
+					(ubiX[4] == i && ubiY[4] == j) ||
+					(ubiX[5] == i && ubiY[5] == j) ||
+					(ubiX[6] == i && ubiY[6] == j) ||
+					(ubiX[7] == i && ubiY[7] == j) ||
+					(ubiX[8] == i && ubiY[8] == j))
+				{
+					SetConsoleTextAttribute(hConsole, 3);
+					printf(" %d ", sudoku[i][j]);
+				}
+			
+				else 
+				{
 					
 					SetConsoleTextAttribute(hConsole, 7);
 					printf(" %d ", sudoku[i][j]);
-//				}
+				}
 	
 				SetConsoleTextAttribute(hConsole, 7);
 
@@ -333,29 +345,29 @@ int main(){
 								}
 								
 								//Ahora vamos hacer que solo los numeros por default tengan color
-//								if(ubiX[0] == m && ubiY[0] == n ||
-//									ubiX[1] == m && ubiY[1] == n ||
-//									ubiX[2] == m && ubiY[2] == n ||
-//									ubiX[3] == m && ubiY[3] == n ||
-//									ubiX[4] == m && ubiY[4] == n ||
-//									ubiX[5] == m && ubiY[5] == n ||
-//									ubiX[6] == m && ubiY[6] == n ||
-//									ubiX[7] == m && ubiY[7] == n ||
-//									ubiX[8] == m && ubiY[8] == n 
-//								)
-//								{
-//									SetConsoleTextAttribute(hConsole, 3);
-//									printf(" %d ", sudoku[n][m]);
-//								}
-//								
-//								else 
-//								{
+								if((ubiX[0] == n && ubiY[0] == m) ||
+									(ubiX[1] == n && ubiY[1] == m)||
+									(ubiX[2] == n && ubiY[2] == m) ||
+									(ubiX[3] == n && ubiY[3] == m) ||
+									(ubiX[4] == n && ubiY[4] == m) ||
+									(ubiX[5] == n && ubiY[5] == m) ||
+									(ubiX[6] == n && ubiY[6] == m) ||
+									(ubiX[7] == n && ubiY[7] == m) ||
+									(ubiX[8] == n && ubiY[8] == m)
+								)
+								{
+									SetConsoleTextAttribute(hConsole, 3);
+									printf(" %d ", sudoku[n][m]);
+								}
+								
+								else 
+								{
 									SetConsoleTextAttribute(hConsole, 7);	
 									printf(" %d ", sudoku[n][m]);
-//								}
-//								
-//								SetConsoleTextAttribute(hConsole, 7);
-//				
+								}
+								
+								SetConsoleTextAttribute(hConsole, 7);
+				
 								if(m == 2 || m == 5)
 								{
 									printf(" | ");
@@ -374,7 +386,7 @@ int main(){
 		}
 	}
 	
-		
+	
 	int tableroCorrecto = 1;
 	
 	//CORRECCION
@@ -419,136 +431,43 @@ int main(){
 		}
 	}
 	
-
-	
-	
-// PERDIO	
+	// PERDIO	
 
 	if(correcto == 0)
 	{
-		system ("COLOR 4F");
-		printf("\n\t \t PERDISTE!\n\n");
-		printf("Seleccione: \n 1. Ver Errores \n 2. Menu\n Respuesta: ");
-		scanf("%d", &r);
-		
-		
-		//RESPUESTA INCORRECTA
-		do{
-			if(r < 1 || r > 2)
-			{
-				printf("La respuesta ingresada NO es correcta\n Intentelo Nuevamente: \n");
-				printf("Seleccione: \n 1. Ver Errores \n 2. Menu\n Respuesta: ");
-				scanf("%d", &r);
-			}
-		}while(r < 1 || r > 2);
-		
-		
-		if(r == 1)
+		for(i=10;i>0;i--)
 		{
+			system("cls");
+			system ("COLOR 4F");
+			printf("\n\t\t\t\t\t\t PERDISTE!\n\n");
+			printf("\n\n");
 			
-		//Filas	
-			for(i=0;i<9;i++)
-			{
-				int numeros[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-				for(j=0;j<9;j++)
-				{
-					numeros[sudoku[i][j]] = 0;
-				}
-				
-				for (k=1;k<10;k++)
-				{
-					if (numeros[k] == 1)
-					{
-						correcto = 0;
-						tableroCorrecto = 0;
-					}
-				}
-					if(correcto == 0)
-					{
-						printf("La FILA %d no cumple con lo solicitado\n", i);
-					}	
-			}
-		
-		//Columas
-		
-			for(j=0;j<9;j++)
-			{
-				int numeros[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-				for(i=0;i<9;i++)
-				{
-					numeros[sudoku[i][j]] = 0;
-				}
-		
-				for (k=1;k<10;k++)
-				{
-					if (numeros[k] == 1)
-					{
-						correcto = 0;
-						tableroCorrecto = 0;
-					}
-				}
-					if(correcto == 0)
-					{
-						printf("La COLUMNA %d no cumple con lo solicitado\n", j);
-					}
-			}
-			
-			
-			printf("____________________________________________________________________________________________________  \n\n Seleccione: 1.Menu \n Respuesta: ");
-			scanf("%d", &r);
-			
-			do{
-				if(r != 1)
-				{
-					printf("La respuesta ingresada NO es correcta\n Intentelo Nuevamente: \n ");
-					printf("Seleccione: 1.Menu \n Respuesta: ");
-					scanf("%d", &r);	
-				}
-			}while(r > 1 || r < 1);
-			
-			if(r == 1)
-			{
-				return 0;
-			}
+			printf("\t\t\t\tUsted sera redirigido al Menu en %d segundos", i);
+			Sleep(1000);			
 		}
-	
-		if(r == 2)
-		{
-			return 0;
-		}
+		
+		return 0;
 	
 	}
 
-//GANÓ
+	//GANO
 
 	if(tableroCorrecto == 1)
 	{
-		int exit = 0;
-		system ("COLOR 2F");
-		printf("\n\t\tFelicidades usted a ganado el juego!\n") 	;
-		
-		printf("Seleccione \n 1. Menu  Respuesta: ");
-		scanf("%d", &r2);
-		
-		//Respuesta Incorrecta
-		do{
-			if(r2 != 1)
-			{
-				printf("La respuesta ingresada NO es correcta\n Intentelo Nuevamente: \n ");
-			}
-				printf("Seleccione \n 1. Menu \n Respuesta: ");
-				scanf("%d", &r2);	
-			
-		}while(r2 != 2);
-		
-		if(r2 == 1)
+		for(i=10;i>0;i--)
 		{
-			return 0;
+			system("cls");
+			int exit = 0;
+			system ("COLOR 2F");
+			printf("\n\t\t\t\t\t FELICIDADES GANO EL JUEGO! \n");
+			printf("\n\n");
+			
+			printf("\t\t\t\tUsted sera redirigido al Menu en %d segundos", i);
+			Sleep(1000);
 		}
-
 		
-		
-		
+		return 0;
+			
 	}
 	
 }
